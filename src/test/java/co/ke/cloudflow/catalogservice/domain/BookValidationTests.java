@@ -23,14 +23,14 @@ class BookValidationTests {
 
     @Test
     void whenAllFieldsCorrectThenValidationSucceeds() {
-        var book = new Book("1234567890", "Amp it Up", "Frank Scootman", 9.99);
+        var book = Book.of("1234567890", "Amp it Up", "Frank Scootman", 9.99, "Manning");
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).isEmpty();
     }
 
     @Test
     void whenIsbnDefinedButIncorrectThenValidationFails() {
-        var book = new Book("a1234567890", "Amp it Up", "Frank Scootman", 9.99);
+        var book = Book.of("a1234567890", "Amp it Up", "Frank Scootman", 9.99, "WROX");
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo("This ISBN format must be valid.");
@@ -38,16 +38,9 @@ class BookValidationTests {
 
     @Test
     void whenPriceDefinedButNegativeThenValidationFails() {
-        var book = new Book("1234567890", "Amp it Up", "Frank Scootman", -9.99);
+        var book = Book.of("1234567890", "Amp it Up", "Frank Scootman", -9.99, "Manning");
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo("The book price must be greated than zero.");
     }
-
-
-
-
-
-
-
 }

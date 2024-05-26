@@ -21,7 +21,7 @@ class CatalogServiceApplicationTests {
 	void whenPutRequestThenBookUpdated() {
 
 		String isbn = "1234567890";
-		var bookToCreate = new Book(isbn, "Amp It Up", "Frank Slootman", 9.00);
+		var bookToCreate = Book.of(isbn, "Amp It Up", "Frank Slootman", 9.00, "Manning");
 
 		Book createdBook =  webTestClient
 				.post()
@@ -35,7 +35,7 @@ class CatalogServiceApplicationTests {
 				}).returnResult().getResponseBody();
 
 		var bookToUpdate =
-				new Book(createdBook.isbn(), createdBook.title(), "Frank Slootman, Abu Kasozi", 29.99);
+				Book.of(createdBook.isbn(), createdBook.title(), "Frank Slootman, Abu Kasozi", 29.99, "Manning");
 
 		webTestClient
 				.put()
@@ -53,7 +53,7 @@ class CatalogServiceApplicationTests {
 	@Test
 	void whenPostRequestThenBookCreated() {
 
-		var expectedBook = new Book("1234567892", "Amp It Up", "Frank Slootman", 9.00);
+		var expectedBook = Book.of("1234567892", "Amp It Up", "Frank Slootman", 9.00, "Manning");
 
 		webTestClient
 				.post()
@@ -70,7 +70,7 @@ class CatalogServiceApplicationTests {
 	@Test
 	void whenGetRequestAndBookExistsThenSuccess() {
 
-		var bookToCreate = new Book("1234567894", "Amp It Up", "Frank Slootman", 9.00);
+		var bookToCreate = Book.of("1234567894", "Amp It Up", "Frank Slootman", 9.00, "Manning");
 
 		Book bookCreated = webTestClient
 				.post()
@@ -107,7 +107,7 @@ class CatalogServiceApplicationTests {
 	@Test
 	void whenPostRequestWithIncorrectIsbnTheRequestFails() {
 
-		var expectedBook = new Book("a1234567890", "Amp It Up", "Frank Slootman", 9.00);
+		var expectedBook = Book.of("a1234567890", "Amp It Up", "Frank Slootman", 9.00, "Manning");
 
 		webTestClient
 				.post()
@@ -125,7 +125,7 @@ class CatalogServiceApplicationTests {
 	@Test
 	void whenDeleteRequestExistingBookThenRequestSucceeds() {
 
-		var bookToCreate = new Book("1234567893", "Amp It Up", "Frank Slootman", 9.00);
+		var bookToCreate = Book.of("1234567893", "Amp It Up", "Frank Slootman", 9.00, "Manning");
 
 		Book bookCreated = webTestClient
 				.post()
